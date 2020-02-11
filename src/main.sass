@@ -1,21 +1,25 @@
-div
-  margin: 1px
-  width: 25px
-  height: 25px
-  background-color: green
-  float: left
-  text-align: center
-  display: flex
-  &:nth-child(8n+3)
+div.reversi
+  $size: 250px
+  width: $size
+  height: $size
+  div
+    $margin: 1px
+    $sqSize: $size / 8 - $margin * 2
+    margin: $margin
+    width: $sqSize
+    height: $sqSize
+    background-color: darkgreen
     float: left
-    clear: both
-
-p
-  width: 80%
-  height: 80%
-  margin: auto
-  border-radius: 50%
-  &.w
-    background-color: white
-  &.b
-    background-color: black
+    text-align: center
+    display: flex
+    &:nth-child(8n+1)
+      clear: both
+    p
+      width: 80%
+      height: 80%
+      margin: auto
+      border-radius: 50%
+      &.w
+        background-color: white
+      &.b
+        background-color: black

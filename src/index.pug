@@ -7,6 +7,12 @@ html(lang="ja")
     link(rel='stylesheet', href="main.css")
     title テスト
   body
-    - for (var x = 0; x < 64; x++)
-      div(class="m")
-        p(class="s")
+    div(class="reversi")
+      - for (var x = 0; x < 64; x++)
+        div
+          p
+    div(class="btnContainer")
+      button(id="prev")
+        | <
+      button(id="next")
+        | >
