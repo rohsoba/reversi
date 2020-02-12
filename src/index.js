@@ -1,4 +1,4 @@
-const ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const ALPHA = "ABCDEFGH";
 const VEC_MAP = [
     {x: -1, y: -1},
     {x:  0, y: -1},
@@ -37,7 +37,7 @@ function put(x, y, c) {
     const reverseList = [];
     VEC_MAP.forEach(v => {
         const tmp = [];
-        for (let i=1; true; i++) {
+        for (let i=1; ; i++) {
             const cx = x + v.x*i;
             const cy = y + v.y*i;
             if (cx < 0 || 8 <= cx || cy < 0 || 8 <= cy || board[cy][cx] == null) break;
@@ -52,7 +52,8 @@ function put(x, y, c) {
     reverseList.forEach(v => board[v.y][v.x] = c);
 }
 function update() {
-    const sqs = document.getElementsByClassName("reversi")[0].getElementsByTagName("DIV");
+    const sqs = document.getElementsByClassName("reversi")[0]
+        .getElementsByClassName("square");
     board.forEach((r, y) => {
         r.forEach((c, x) => {
             sqs[x + y * 8].children[0].className = c?.toLowerCase() ?? "";

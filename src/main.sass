@@ -1,25 +1,28 @@
 div.reversi
-  $size: 250px
+  $size: 180px
   width: $size
   height: $size
   div
     $margin: 1px
-    $sqSize: $size / 8 - $margin * 2
+    $sqSize: $size / 9 - $margin * 2
     margin: $margin
     width: $sqSize
     height: $sqSize
-    background-color: darkgreen
     float: left
-    text-align: center
     display: flex
-    &:nth-child(8n+1)
-      clear: both
-    p
-      width: 80%
-      height: 80%
-      margin: auto
-      border-radius: 50%
-      &.w
-        background-color: white
-      &.b
-        background-color: black
+    color: black
+    font-size: 8pt
+    text-align: center
+    &.square
+      background-color: darkgreen
+      &:nth-child(9n+1)
+        clear: both
+      p
+        width: 80%
+        height: 80%
+        margin: auto
+        border-radius: 50%
+        &.w
+          background-color: white
+        &.b
+          background-color: black

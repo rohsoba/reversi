@@ -8,11 +8,14 @@ html(lang="ja")
     title テスト
   body
     div(class="reversi")
-      - for (var x = 0; x < 64; x++)
-        div
-          p
+      div
+      each c in [ "A", "B", "C", "D", "E", "F", "G", "H" ]
+        div #{c}
+      - for (let y = 0; y < 8; y++)
+        div #{y+1}
+        - for (let x = 0; x < 8; x++)
+          div(class="square")
+            p
     div(class="btnContainer")
-      button(id="prev")
-        | <
-      button(id="next")
-        | >
+      button(id="prev") <
+      button(id="next") >

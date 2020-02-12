@@ -35,12 +35,20 @@ gulp.task('babel', () => {
         .pipe(gulp.dest('dist'));
 });
 
+gulp.task('update', () => {
+    gulp.series('babel');
+    gulp.series('sass');
+    gulp.series('pug');
+});
+
 gulp.task('browser-sync', () => {
     browserSync({
         server: {
             baseDir: "./dist/"
         }
     });
+
+    gulp.series('update');
 
     gulp.watch('dist/*.js', gulp.series('reload'));
     gulp.watch('dist/*.css', gulp.series('reload'));
