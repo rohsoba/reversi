@@ -1,48 +1,54 @@
 const ALPHA = "abcdefgh";
 const VEC_MAP = [
     {x: -1, y: -1},
-    {x:  0, y: -1},
-    {x:  1, y: -1},
-    {x: -1, y:  0},
-    {x:  1, y:  0},
-    {x: -1, y:  1},
-    {x:  0, y:  1},
-    {x:  1, y:  1}];
+    {x: 0, y: -1},
+    {x: 1, y: -1},
+    {x: -1, y: 0},
+    {x: 1, y: 0},
+    {x: -1, y: 1},
+    {x: 0, y: 1},
+    {x: 1, y: 1}];
 let board = new Array(8).fill(null).map(() => new Array(8).fill(null));
 const historyList = [];
 let current = 0;
 let phase = "b";
 
 function load(notation) {
-    for (let i=0; i<notation.length; i+=3) {
+    for (let i = 0; i < notation.length; i += 3) {
         const s = toXyc(notation.substr(i, 3));
         board[s.y][s.x] = s.c;
     }
     candidates(phase).forEach(v => board[v.y][v.x] = "l");
     historyList.push(JSON.parse(JSON.stringify(board)));
 }
+
 function progress(notation) {
-    for (let i=0; i<notation.length; i+=2) {
-        for (let y = 0; y < 8; y++) {
-            for (let x = 0; x < 8; x++) {
-                if (board[y][x] === "l") board[y][x] = null;
-            }
+    for (let i = 0; i < notation.length; i += 2) {
+        for (let bi = 0; bi < 64; bi++) {
+            const x = bi % 8, y = bi / 8 | 0;
+            if (board[y][x] === "l") board[y][x] = null;
         }
         const s = toXy(notation.substr(i, 2));
         put(s.x, s.y);
         historyList.push(JSON.parse(JSON.stringify(board)));
     }
 }
+
 function toXyc(s) {
-    return Object.assign(toXy(s), { c: s[2].toLowerCase() });
+    return Object.assign(toXy(s), {c: s[2].toLowerCase()});
 }
+
 function toXy(s) {
     return {
         x: ALPHA.indexOf(s[0].toLowerCase()),
         y: Number(s[1]) - 1,
-    }
+    };
 }
+
 function put(x, y) {
+    if (phase == null) {
+        return;
+    }
     const reverseList = check(x, y, phase);
     board[y][x] = phase;
     reverseList.forEach(v => board[v.y][v.x] = phase);
@@ -59,6 +65,7 @@ function put(x, y) {
     canList.forEach(v => board[v.y][v.x] = "l");
     phase = nextPhase;
 }
+
 function check(x, y, c) {
     if (!isEmpty(board[y][x])) {
         return [];
@@ -77,37 +84,63 @@ function check(x, y, c) {
         return [];
     }).flat();
 }
+
 function isEmpty(s) {
-    return s == null || s === "l";
+    return s !== "b" && s !== "w";
 }
+
 function candidates(c) {
     const canList = [];
-    for (let y = 0; y < 8; y++) {
-        for (let x = 0; x < 8; x++) {
-            if (check(x, y, c).length > 0) {
-                canList.push({x: x, y: y});
-            }
+    for (let bi = 0; bi < 64; bi++) {
+        const x = bi % 8, y = bi / 8 | 0;
+        if (check(x, y, c).length > 0) {
+            canList.push({x: x, y: y});
         }
     }
     return canList;
 }
+
+let id = null;
+
 function update() {
     const sqs = document.getElementsByClassName("reversi")[0]
         .getElementsByClassName("square");
-    board.forEach((r, y) => {
-        r.forEach((c, x) => {
-            sqs[x + y * 8].children[0].className = c ?? "";
-        });
-    });
+    for (let bi = 0; bi < 64; bi++) {
+        const x = bi % 8, y = bi / 8 | 0, c = board[y][x];
+        const st = sqs[x + y * 8].children[0];
+        st.className = "";
+        if (!isEmpty(c)) {
+            st.className = c ?? "";
+        }
+    }
+    if (id != null) {
+        clearTimeout(id);
+    }
+    id = setTimeout(highlight, 100);
 }
+
+function highlight() {
+    const sqs = document.getElementsByClassName("reversi")[0]
+        .getElementsByClassName("square");
+    for (let bi = 0; bi < 64; bi++) {
+        const x = bi % 8, y = bi / 8 | 0, c = board[y][x];
+        const st = sqs[x + y * 8].children[0];
+        if (c === "l") {
+            st.className = "l";
+        }
+    }
+    id = null;
+}
+
 function prev() {
-    if (current-1 >= 0) {
+    if (current - 1 >= 0) {
         board = historyList[--current];
         update();
     }
 }
+
 function next() {
-    if (current+1 < historyList.length) {
+    if (current + 1 < historyList.length) {
         board = historyList[++current];
         update();
     }

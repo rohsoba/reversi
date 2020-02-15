@@ -14,7 +14,7 @@ div.reversi
     font-size: 8pt
     text-align: center
     &.square
-      background-color: darkgreen
+      background-color: green
       &:nth-child(9n+1)
         clear: both
       p
@@ -27,4 +27,10 @@ div.reversi
         &.b
           background-color: black
         &.l
-          background: radial-gradient(circle farthest-side, #FFFF00A0, #00000000)
+          background: radial-gradient(circle farthest-side, yellow, #00000000)
+          animation: f 1s linear infinite
+          @keyframes f
+            0%, 100%
+              opacity: 1
+            50%
+              opacity: 0
