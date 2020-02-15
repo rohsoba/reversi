@@ -1,10 +1,9 @@
+$size: 180px
+$margin: 1px
+$sqSize: $size / 9 - $margin * 2
 div.reversi
-  $size: 180px
   width: $size
-  height: $size
   div
-    $margin: 1px
-    $sqSize: $size / 9 - $margin * 2
     margin: $margin
     width: $sqSize
     height: $sqSize
@@ -34,3 +33,18 @@ div.reversi
               opacity: 1
             50%
               opacity: 0
+div.btnContainer
+  button
+    float: left
+  div
+    background-color: transparent
+    p
+      width: $sqSize
+      height: $sqSize
+      margin: auto
+      border-radius: 50%
+      border: black 1px solid
+      &.w
+        background-color: white
+      &.b
+        background-color: black

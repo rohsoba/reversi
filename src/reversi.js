@@ -19,7 +19,7 @@ function load(notation) {
         board[s.y][s.x] = s.c;
     }
     candidates(phase).forEach(v => board[v.y][v.x] = "l");
-    historyList.push(JSON.parse(JSON.stringify(board)));
+    historyList.push({ phase: phase, board: JSON.parse(JSON.stringify(board)) });
 }
 
 function progress(notation) {
@@ -30,7 +30,7 @@ function progress(notation) {
         }
         const s = toXy(notation.substr(i, 2));
         put(s.x, s.y);
-        historyList.push(JSON.parse(JSON.stringify(board)));
+        historyList.push({ phase: phase, board: JSON.parse(JSON.stringify(board)) });
     }
 }
 
@@ -113,6 +113,7 @@ function update() {
             st.className = c ?? "";
         }
     }
+    document.getElementById("current").className = historyList[current].phase ?? "";
     if (id != null) {
         clearTimeout(id);
     }
@@ -134,14 +135,14 @@ function highlight() {
 
 function prev() {
     if (current - 1 >= 0) {
-        board = historyList[--current];
+        board = historyList[--current].board;
         update();
     }
 }
 
 function next() {
     if (current + 1 < historyList.length) {
-        board = historyList[++current];
+        board = historyList[++current].board;
         update();
     }
 }
@@ -151,6 +152,6 @@ window.onload = () => {
     document.getElementById("next").onclick = next;
     load("D4WD5BE4BE5W");
     progress("f5f6e6f4g5g6h6c5g4e7d6f7d7c6e8c8d8f8e3f3g3h3h5e2d1f2e1f1g1d2c1d3c7c2b1c4g2h4h2h1c3a1g7h7b2b3b4a4a3a2a5h8g8b8b7a8b5b6a7a6");
-    board = historyList[0];
+    board = historyList[0].board;
     update();
 };
