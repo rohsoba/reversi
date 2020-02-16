@@ -17,34 +17,23 @@ div.reversi
       background-color: green
       &:nth-child(9n+1)
         clear: both
-      p
-        width: $discSize
-        height: $discSize
-        margin: auto
-        border-radius: 50%
-        &.w
-          background-color: white
-        &.b
-          background-color: black
-        &.l
-          background: radial-gradient(circle farthest-side, yellow, #00000000)
-          animation: f 1s linear infinite
-          @keyframes f
-            0%, 100%
-              opacity: 0
-            50%
-              opacity: 1
-div.btnContainer
-  button
-    float: left
-  div
     p
       width: $discSize
       height: $discSize
       margin: auto
       border-radius: 50%
-      border: black 1px solid
       &.w
         background-color: white
       &.b
         background-color: black
+      &.l
+        background: radial-gradient(circle farthest-side, yellow, #00000000)
+        animation: f 1s linear infinite
+        @keyframes f
+          0%, 100%
+            opacity: 0
+          50%
+            opacity: 1
+  div.btnContainer
+    button
+      float: left

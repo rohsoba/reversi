@@ -58,7 +58,6 @@ function put(x, y) {
         nextPhase = nextPhase === "b" ? "w" : "b";
         canList = candidates(nextPhase);
         if (canList.length === 0) {
-            console.log("game set");
             nextPhase = null;
         }
     }
@@ -75,7 +74,7 @@ function check(x, y, c) {
         for (let i = 1; ; i++) {
             const cx = x + v.x * i;
             const cy = y + v.y * i;
-            if (cx < 0 || 8 <= cx || cy < 0 || 8 <= cy || isEmpty(board[cy][cx])) break;
+            if (isEmpty(board[cy]?.[cx])) break;
             if (board[cy][cx] === c) {
                 return tmp;
             }
