@@ -124,8 +124,8 @@ function highlight() {
         .getElementsByClassName("square");
     for (let bi = 0; bi < 64; bi++) {
         const x = bi % 8, y = bi / 8 | 0, c = board[y][x];
-        const disc = sqs[x + y * 8].children[0];
         if (c === "l") {
+            const disc = sqs[x + y * 8].children[0];
             disc.className = "l";
         }
     }
