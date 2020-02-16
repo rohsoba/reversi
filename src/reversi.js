@@ -13,7 +13,7 @@ const historyList = [];
 let current = 0;
 let phase = "b";
 
-function load(notation) {
+function setup(notation) {
     for (let i = 0; i < notation.length; i += 3) {
         const s = toXyc(notation.substr(i, 3));
         board[s.y][s.x] = s.c;
@@ -107,10 +107,10 @@ function update() {
         .getElementsByClassName("square");
     for (let bi = 0; bi < 64; bi++) {
         const x = bi % 8, y = bi / 8 | 0, c = board[y][x];
-        const st = sqs[x + y * 8].children[0];
-        st.className = "";
+        const disc = sqs[x + y * 8].children[0];
+        disc.className = "";
         if (!isEmpty(c)) {
-            st.className = c ?? "";
+            disc.className = c ?? "";
         }
     }
     document.getElementById("current").className = historyList[current].phase ?? "";
@@ -125,9 +125,9 @@ function highlight() {
         .getElementsByClassName("square");
     for (let bi = 0; bi < 64; bi++) {
         const x = bi % 8, y = bi / 8 | 0, c = board[y][x];
-        const st = sqs[x + y * 8].children[0];
+        const disc = sqs[x + y * 8].children[0];
         if (c === "l") {
-            st.className = "l";
+            disc.className = "l";
         }
     }
     id = null;
@@ -150,8 +150,8 @@ function next() {
 window.onload = () => {
     document.getElementById("prev").onclick = prev;
     document.getElementById("next").onclick = next;
-    load("D4WD5BE4BE5W");
-    progress("f5f6e6f4g5g6h6c5g4e7d6f7d7c6e8c8d8f8e3f3g3h3h5e2d1f2e1f1g1d2c1d3c7c2b1c4g2h4h2h1c3a1g7h7b2b3b4a4a3a2a5h8g8b8b7a8b5b6a7a6");
+    setup("d4wd5be4be5w");
+    progress("f5f6e6d6e7g5c5f7c4e3f4f3g6d3h5h6h7d8c3c7c6d7c2g4f8e8g7d2d1b5b8c8b4a8a6b6g8a5a4e2b3h8h3h4f1e1f2h2g3g2a7b7a3b2a1a2b1c1g1h1");
     board = historyList[0].board;
     update();
 };

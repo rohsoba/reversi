@@ -1,6 +1,7 @@
 $size: 180px
 $margin: 1px
 $sqSize: $size / 9 - $margin * 2
+$discSize: $sqSize * 0.8
 div.reversi
   width: $size
   div
@@ -17,8 +18,8 @@ div.reversi
       &:nth-child(9n+1)
         clear: both
       p
-        width: 80%
-        height: 80%
+        width: $discSize
+        height: $discSize
         margin: auto
         border-radius: 50%
         &.w
@@ -30,17 +31,16 @@ div.reversi
           animation: f 1s linear infinite
           @keyframes f
             0%, 100%
-              opacity: 1
-            50%
               opacity: 0
+            50%
+              opacity: 1
 div.btnContainer
   button
     float: left
   div
-    background-color: transparent
     p
-      width: $sqSize
-      height: $sqSize
+      width: $discSize
+      height: $discSize
       margin: auto
       border-radius: 50%
       border: black 1px solid
